@@ -1,6 +1,7 @@
 #ifndef SUB_ADD_PING_OBJECT_H
 #define SUB_ADD_PING_OBJECT_H
 
+#include <algorithm>
 #include <QDialog>
 #include <QVector>
 #include <QGridLayout>//
@@ -36,7 +37,10 @@ private:
 
 private:
     QVector<QPair<QLineEdit*, QLineEdit*>> base_ref;
-   int count_line_e = 0;//
+    int count_line_e = 0;
+
+private:
+   bool ip_check(std::string& str);
 };
 
 #endif // SUB_ADD_PING_OBJECT_H

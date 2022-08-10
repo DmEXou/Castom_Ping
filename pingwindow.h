@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QTime>
+#include <QElapsedTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PingWindow; }
@@ -24,11 +25,14 @@ private slots:
 
     void on_actionBild_triggered();
 
+    void timerTimeout();
+
+    void Clock();
+
 private:
     Ui::PingWindow *ui;
-    QTime time;
     QString text;
-    QTimer *timer;//
+    QTime *time;
 
 protected:
     QVector<QPair<QString, QString>> base = {};

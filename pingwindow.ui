@@ -41,17 +41,17 @@
      <layout class="QVBoxLayout" name="status_layout"/>
     </widget>
    </widget>
-   <widget class="QLabel" name="timlocal">
+   <widget class="QLabel" name="Local_Time">
     <property name="geometry">
      <rect>
-      <x>600</x>
-      <y>40</y>
-      <width>161</width>
+      <x>680</x>
+      <y>10</y>
+      <width>111</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; font-weight:700;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
   </widget>

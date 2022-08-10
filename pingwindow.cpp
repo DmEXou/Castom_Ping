@@ -2,19 +2,17 @@
 #include "./ui_pingwindow.h"
 #include "sub_add_ping_object.h"
 
+void PingWindow::timerTimeout()
+{
+    ui->Local_Time->setText(QTime::currentTime().toString());
+}
+
 PingWindow::PingWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::PingWindow)
 {
     ui->setupUi(this);
-//    time = QTime::currentTime();
-//    text = time.toString("hh:mm:ss");
-//    QObject::connect(timer,SIGNAL(timeout()), this, SLOT(timer_overflow()));
-//    ui->timlocal->setText(text);
-//    time = 0;
-//    timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(timer_slot()));
-//    timer->start(1);
+    Clock();
 }
 
 PingWindow::~PingWindow()
@@ -45,6 +43,15 @@ void PingWindow::on_actionBild_triggered() //Нажатие на Сабменю 
         for_label->setText(name_ip.first);
         ui->status_layout->addWidget(for_label);
     }
+}
+
+void PingWindow::Clock(){
+    QTimer *timer = new QTimer;
+    time = new QTime;
+    ui->Local_Time->setText(QTime::currentTime().toString());
+    ui->Local_Time->setStyleSheet(" font-size:18pt; font-weight:700;");
+    connect(timer, SIGNAL(timeout()), this, SLOT(timerTimeout()));
+    timer->start(1000);
 }
 
 
