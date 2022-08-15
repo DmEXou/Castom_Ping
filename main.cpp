@@ -98,6 +98,79 @@ private:
 };
 }//VSping
 */
+
+/*
+bool GlobalStuff::PING(const QString &host_address, bool show_results)
+{
+    if(host_address.isEmpty())return false;
+
+#ifdef DEBUG
+        qDebug()<<"core: trying to ping host:"<<host_address;
+#endif
+        bool boolRESULT=false;
+
+        int ping_timeout=500;
+        QString exe_path;
+        #ifdef Q_WS_WIN
+            exe_path=getwindir()+"\\system32\\ping.exe";
+        #endif
+        #ifdef Q_WS_X11
+            exe_path="/bin/ping";
+        #endif
+
+       exe_path=global_settings->value("main/ping",exe_path).toString();
+       ping_timeout=global_settings->value("main/SETTINGS_PING_TIMEOUT",ping_timeout).toInt();
+       if (ping_timeout<=0)ping_timeout=500;
+
+        if(!QFile::exists(exe_path))
+        {
+#ifdef DEBUG
+            qDebug()<<"core: ERROR:"<<exe_path<<"not found!";
+#endif
+            boolRESULT=false;
+        }
+        else
+        {
+            //qApp->setOverrideCursor(Qt::WaitCursor);
+
+            QStringList arguments;
+            #ifdef Q_WS_WIN
+                QTextCodec::setCodecForCStrings(QTextCodec::codecForName("cp-866"));
+                arguments<<host_address;
+            #endif
+            #ifdef Q_WS_X11
+                QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+                arguments<<host_address<<"-c 1";
+            #endif
+
+            QProcess myProcess;
+            myProcess.start(exe_path,arguments);
+            myProcess.waitForFinished(ping_timeout);
+
+            QStringList strlstPingResults;
+            strlstPingResults<<myProcess.readAll();
+            myProcess.deleteLater();
+
+            QString strResult="";
+            for (int i=0;i<=strlstPingResults.count()-1;i++)
+            {
+#ifdef DEBUG
+                qDebug()<<"core: ping results:"<<strlstPingResults[i];
+#endif
+                strResult='\n'+strlstPingResults[i];
+                boolRESULT=strlstPingResults[i].contains("ttl",Qt::CaseInsensitive);
+                if (boolRESULT)break;
+            };
+
+            //qApp->restoreOverrideCursor();
+
+            if ((show_results)&&(boolRESULT))QMessageBox::information(0,host_address,strResult,QMessageBox::Ok);
+        }
+
+
+        return boolRESULT;
+}
+*/
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

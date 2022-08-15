@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QTime>
 #include <QElapsedTimer>
+#include <future>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PingWindow; }
@@ -17,6 +18,9 @@ class PingWindow : public QMainWindow
 public:
     PingWindow(QWidget *parent = nullptr);
     ~PingWindow();
+
+    bool ping_(const QString& ip);
+    QString TEST(const QString& ip);
 
 private slots:
     void on_actionClose_triggered();

@@ -32,6 +32,8 @@ private slots:
 
     void on_del_lineedit_clicked();//Реакция на DEL в дочернем окне.
 
+    void on_buttonBox_clicked(QAbstractButton *button);
+
 private:
     Ui::Sub_Add_Ping_Object *ui;
 
