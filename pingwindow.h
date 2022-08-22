@@ -5,7 +5,10 @@
 #include <QTimer>
 #include <QTime>
 #include <QElapsedTimer>
-#include <future>
+//#include <future>
+#include <QJsonObject>
+//#include <QJSonDocument>
+#include <QFile>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PingWindow; }
@@ -20,7 +23,10 @@ public:
     ~PingWindow();
 
     bool ping_(const QString& ip);
-    QString TEST(const QString& ip);
+    QString answer_color(const QString& ip);
+
+signals:
+    void test();
 
 private slots:
     void on_actionClose_triggered();
@@ -33,10 +39,15 @@ private slots:
 
     void Clock();
 
+    void on_actionSave_triggered();
+
+    void on_actionLoad_triggered();
+
 private:
     Ui::PingWindow *ui;
     QString text;
     QTime *time;
+    QJsonObject JsonObject;
 
 protected:
     QVector<QPair<QString, QString>> base = {};

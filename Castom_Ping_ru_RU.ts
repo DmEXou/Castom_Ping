@@ -25,18 +25,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pingwindow.ui" line="89"/>
+        <location filename="pingwindow.ui" line="86"/>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pingwindow.ui" line="97"/>
         <source>Add IP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pingwindow.ui" line="94"/>
+        <location filename="pingwindow.ui" line="102"/>
         <source>Bild</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pingwindow.ui" line="99"/>
+        <location filename="pingwindow.ui" line="107"/>
         <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pingwindow.ui" line="112"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pingwindow.ui" line="117"/>
+        <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -54,7 +54,7 @@ void PingWindow::on_actionAdd_IP_triggered() //Надатие на Сабмен�
     base = add_object.base;
 }
 
-QString PingWindow::TEST(const QString& ip){
+QString PingWindow::answer_color(const QString& ip){
     QString color_lable;
     if(ping_(ip)){
         color_lable = "rgb(50, 150, 10)";
@@ -68,14 +68,15 @@ QString PingWindow::TEST(const QString& ip){
 
 void PingWindow::on_actionBild_triggered() //Нажатие на Сабменю Bild
 {
-    for(const auto& name_ip : base){
+    for(const auto& [name, ip] : base){ // Первый пинг ip адресов.
         QLabel *for_label = new QLabel;
         //for_label->setStyleSheet("128, 128, 128");
-        for_label->setStyleSheet(TEST(name_ip.second));
-        for_label->setText(name_ip.first);
+        for_label->setStyleSheet(answer_color(ip));
+        for_label->setText(name);
         ui->status_layout->addWidget(for_label);
     }
-    ui->status_layout->addStretch(); // Ну хоть что то понял!!!
+
+    ui->status_layout->addStretch(); // Смещение результатов пинга вверх в ЛойаутБоксе
 
 //    for(const auto& name_ip : base){
 
@@ -95,11 +96,46 @@ void PingWindow::on_actionBild_triggered() //Нажатие на Сабменю 
     //        color_lable.push_front("color: ");
 }
 
-void PingWindow::Clock(){
+void PingWindow::Clock(){ //Часы вправом верхнем углу.
     QTimer *timer = new QTimer;
     time = new QTime;
     ui->Local_Time->setText(QTime::currentTime().toString());
     ui->Local_Time->setStyleSheet(" font-size:18pt; font-weight:700;");
-    connect(timer, SIGNAL(timeout()), this, SLOT(timerTimeout()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(timerTimeout())); // НУЖНО РАЗОБРАТСЯ!!!!! ЭТО ОСНОВЫ!!!
     timer->start(1000);
 }
+
+void PingWindow::on_actionSave_triggered() // Нажатие на сабменю Save
+{
+    QJsonArray tmp_array;
+    for(const auto& [name, ip] : base){
+        QJsonArray tmp_array2({name, ip});
+        tmp_array.push_back(tmp_array2);
+    }
+    QJsonDocument doc;
+    doc.setArray(tmp_array);
+    QFile file("date.txt");
+    if (file.open(QIODevice::WriteOnly))
+    {
+        qDebug() << "FILE OPEN!!!";
+        QString JSON__(doc.toJson());
+        QTextStream stream(&file);
+        stream << JSON__;
+        file.close();
+    }
+}
+
+
+void PingWindow::on_actionLoad_triggered() //Нажати на сабменю Load
+{
+    QFile file("date.txt");
+    base.clear();
+    if (file.open(QIODevice::ReadOnly)){
+        auto data = file.readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        for(const auto& pair : doc.array()){
+            base.push_back(std::make_pair(pair[0].toString(), pair[1].toString()));
+        }
+    }
+}
+
