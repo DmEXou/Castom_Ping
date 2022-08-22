@@ -49,23 +49,36 @@ void Sub_Add_Ping_Object::on_add_new_lineedit_clicked()//Реакция на ADD
 {
     QLineEdit *line_name = new QLineEdit(this);
     QLineEdit *line_ip = new QLineEdit(this);
-
-    if (count_line_e <= 5 ){
-        count_line_e++;
+    if (base_ref.size() <= 5 ){
         ui->fild_ip->addWidget(line_ip);
         ui->fild_name->addWidget(line_name);
-
         base_ref.push_back(std::make_pair(line_name, line_ip));
+
+        ui->fild_ip->addStretch();
+        delete ui->fild_ip->takeAt(ui->fild_ip->count() - 3);
+        ui->fild_name->addStretch();
+        delete ui->fild_name->takeAt(ui->fild_name->count() - 3);
     }
     else{
         QMessageBox::warning(this, "Warning", "Maximum lines");
     }
+
 }
 
 
 void Sub_Add_Ping_Object::on_del_lineedit_clicked() //Реакция на Del в дочернем окне.
 {
-
+    if (base_ref.size() != 0){
+        qDebug() << ui->fild_ip->count();
+        ui->fild_ip->removeWidget(base_ref.back().second);
+        ui->fild_name->removeWidget(base_ref.back().second);
+        delete base_ref.back().second;
+        delete base_ref.back().first;
+        base_ref.pop_back();
+    }
+    else{
+        QMessageBox::warning(this, "Warning", "Minimum lines");
+    }
 }
 
 

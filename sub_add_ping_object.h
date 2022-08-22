@@ -39,7 +39,6 @@ private:
 
 private:
     QVector<QPair<QLineEdit*, QLineEdit*>> base_ref;
-    int count_line_e = 0;
 
 private:
    bool ip_check(std::string& str);

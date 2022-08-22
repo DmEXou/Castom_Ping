@@ -6,7 +6,7 @@ bool PingWindow::ping_(const QString& ip){
     QStringList parameters;
 
     #if defined(WIN32)
-    parameters << "-n" << "1" << "-l" << "0" << "-w" << "200";
+    parameters << "-n" << "1" << "-l" << "0" << "-w" << "500";
     #else
     parameters << "-c 1";
     #endif
@@ -75,6 +75,7 @@ void PingWindow::on_actionBild_triggered() //Нажатие на Сабменю 
         for_label->setText(name_ip.first);
         ui->status_layout->addWidget(for_label);
     }
+    ui->status_layout->addStretch(); // Ну хоть что то понял!!!
 
 //    for(const auto& name_ip : base){
 
