@@ -6,7 +6,7 @@ bool PingWindow::ping_(const QString& ip){
     QStringList parameters;
 
     #if defined(WIN32)
-    parameters << "-n" << "1" << "-l" << "0" << "-w" << "500";
+    parameters << "-n" << "1" << "-l" << "1" << "-w" << "500";
     #else
     parameters << "-c 1";
     #endif
@@ -62,38 +62,30 @@ QString PingWindow::answer_color(const QString& ip){
     else{
         color_lable = "rgb(255, 0, 0)";
     }
-    color_lable.push_front("color: ");
+    color_lable.push_front("font-size:18pt; color: ");
     return color_lable;
+}
+
+void PingWindow::reading_update(){ //TEST SLOT
+    for(int i = 0; i < base.size(); ++i){
+        labels_in_status[i]->setStyleSheet(answer_color(base[i].second));
+        labels_in_status[i]->setText(base[i].first);
+    }
 }
 
 void PingWindow::on_actionBild_triggered() //Нажатие на Сабменю Bild
 {
-    for(const auto& [name, ip] : base){ // Первый пинг ip адресов.
-        QLabel *for_label = new QLabel;
-        //for_label->setStyleSheet("128, 128, 128");
-        for_label->setStyleSheet(answer_color(ip));
-        for_label->setText(name);
-        ui->status_layout->addWidget(for_label);
+    for(int i = 0; i < base.size(); ++i){
+        QLabel *lab_show_result_ping = new QLabel;
+        lab_show_result_ping->setStyleSheet("font-size:18pt; color: rgb(127, 127, 0)");
+        lab_show_result_ping->setText(base[i].first);
+        ui->status_layout->addWidget(lab_show_result_ping);
+        labels_in_status.push_back(lab_show_result_ping);
     }
-
+    QTimer *timer_update = new QTimer;
+    connect(timer_update, SIGNAL(timeout()), this, SLOT(reading_update()));//
+    timer_update->start(10000);
     ui->status_layout->addStretch(); // Смещение результатов пинга вверх в ЛойаутБоксе
-
-//    for(const auto& name_ip : base){
-
-//        std::future<QString> f;
-//        f = std::async(TEST(name_ip.second), name_ip.second);
-//    }
-
-    //std::vector<std::future<std::string>> fv = {};
-    //fv.resize(base.size());
-
-    //        if(ping_(name_ip.second)){
-    //            color_lable = "rgb(50, 150, 10)";
-    //        }
-    //        else{
-    //            color_lable = "rgb(255, 0, 0)";
-    //        }
-    //        color_lable.push_front("color: ");
 }
 
 void PingWindow::Clock(){ //Часы вправом верхнем углу.
@@ -133,8 +125,8 @@ void PingWindow::on_actionLoad_triggered() //Нажати на сабменю Lo
     if (file.open(QIODevice::ReadOnly)){
         auto data = file.readAll();
         QJsonDocument doc = QJsonDocument::fromJson(data);
-        for(const auto& pair : doc.array()){
-            base.push_back(std::make_pair(pair[0].toString(), pair[1].toString()));
+        for(const auto& pair_str : doc.array()){
+            base.push_back(std::make_pair(pair_str[0].toString(), pair_str[1].toString()));
         }
     }
 }
