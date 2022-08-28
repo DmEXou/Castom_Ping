@@ -8,6 +8,8 @@
 #include <QJsonObject>
 #include <QFile>
 #include <QLabel>
+#include <QMap>
+#include <QThread>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PingWindow; }
@@ -23,6 +25,7 @@ public:
 
     bool ping_(const QString& ip);
     QString answer_color(const QString& ip);
+    void worck_to_log(const QString&, bool);
 
 private slots:
     void on_actionClose_triggered();
@@ -47,8 +50,10 @@ private:
     QTime *time;
     QJsonObject JsonObject;
     QVector<QLabel*> labels_in_status;
+    QVector<QString> log_status;
 
 protected:
-    QVector<QPair<QString, QString>> base = {};
+    QVector<QPair<QString, QString>> base_outer = {};
+    QMap<QString, int> status_timer_outer;
 };
 #endif // PINGWINDOW_H

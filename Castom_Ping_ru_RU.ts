@@ -20,37 +20,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pingwindow.ui" line="77"/>
+        <location filename="pingwindow.ui" line="67"/>
+        <source>Status at present</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pingwindow.ui" line="91"/>
+        <source>Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pingwindow.ui" line="125"/>
         <source>Mine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pingwindow.ui" line="86"/>
+        <location filename="pingwindow.ui" line="134"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pingwindow.ui" line="97"/>
+        <location filename="pingwindow.ui" line="145"/>
         <source>Add IP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pingwindow.ui" line="102"/>
+        <location filename="pingwindow.ui" line="150"/>
         <source>Bild</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pingwindow.ui" line="107"/>
+        <location filename="pingwindow.ui" line="155"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pingwindow.ui" line="112"/>
+        <location filename="pingwindow.ui" line="160"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pingwindow.ui" line="117"/>
+        <location filename="pingwindow.ui" line="165"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>

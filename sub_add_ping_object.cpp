@@ -37,10 +37,12 @@ void Sub_Add_Ping_Object::on_buttonBox_accepted() //Заполнить базу.
         if(!ip_check(tmp)){
             QMessageBox::warning(this, "Warning", "Incorrect IP");
             base.clear();
+            status_timer.clear();
             break;
         }
         else{
             base.push_back(std::make_pair(pars_line.first->text(), QString::fromStdString (tmp)));
+            status_timer[pars_line.first->text()] = 0;
         }
     }
 }

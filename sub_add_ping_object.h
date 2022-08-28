@@ -24,6 +24,7 @@ public:
 
 public:
     QVector<QPair<QString, QString>> base = {};
+    QMap<QString, int> status_timer;
 
 private slots:
     void on_buttonBox_accepted();
