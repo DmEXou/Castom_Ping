@@ -13,7 +13,8 @@ bool PingWindow::ping_(const QString& ip){
 
     parameters << ip;
     QProcess proc;
-    //auto code = proc.startDetached("ping", parameters); //Попробовать без Thread
+    auto code_det = proc.startDetached("ping", parameters); //Попробовать без Thread
+    qDebug() << code_det << ip << proc.exitStatus() << "---" << proc.exitCode();
     int code = proc.execute("ping", parameters);
     if (code == 0) {
         return true;
@@ -56,16 +57,16 @@ void PingWindow::on_actionAdd_IP_triggered() //Нажатие на Сабмен�
     status_timer_outer = add_object.status_timer;
 }
 
+struct color_str{
+    const QString red = "font-size:18pt; color: rgb(255, 0, 0)";
+    const QString green = "font-size:18pt; color: rgb(50, 150, 10)";
+    const QString grey = "font-size:18pt; color: rgb(127, 127, 0)";
+};
+
 QString PingWindow::answer_color(const QString& ip){
-    QString color_lable;
-    if(ping_(ip)){
-        color_lable = "rgb(50, 150, 10)";
-    }
-    else{
-        color_lable = "rgb(255, 0, 0)";
-    }
-    color_lable.push_front("font-size:18pt; color: ");
-    return color_lable;
+    color_str color;
+    if(ping_(ip)) return color.green;
+    else return color.red;
 }
 
 void PingWindow::worck_to_log(const QString& str, bool del_status = false){
@@ -85,7 +86,7 @@ void PingWindow::worck_to_log(const QString& str, bool del_status = false){
             log_label->setStyleSheet("font-size:8pt");
             log_label->setText(str_log);
             ui->log_layout->addWidget(log_label);
-            auto it = std::find(log_status.begin(), log_status.end(), str);
+            const auto it = std::find(log_status.begin(), log_status.end(), str);
             log_status.erase(it);
         }
     }
@@ -93,17 +94,18 @@ void PingWindow::worck_to_log(const QString& str, bool del_status = false){
 
 void PingWindow::reading_update(){ // SLOT для проверки доступности хоста
     for(int i = 0; i < base_outer.size(); ++i){
-        QThread *thr = new QThread();
+        //QThread *thr = new QThread();
         QString str = answer_color(base_outer[i].second);
-
-        if(str == "font-size:18pt; color: rgb(255, 0, 0)"){ //Задержка в 3 цикла для смены цвета на красный
+        color_str color;
+        if(str == color.red){ //Задержка в 3 цикла для смены цвета на красный
             if (status_timer_outer.value(base_outer[i].first) >= 3){
                 labels_in_status[i]->setStyleSheet(str);
                 worck_to_log(base_outer[i].first);
             }
             else {
                 status_timer_outer[base_outer[i].first]++;
-                labels_in_status[i]->setStyleSheet("font-size:18pt; color: rgb(127, 127, 0)");
+                qDebug() << status_timer_outer;
+                labels_in_status[i]->setStyleSheet(color.grey);
             }
         }
         else {
@@ -114,15 +116,16 @@ void PingWindow::reading_update(){ // SLOT для проверки доступ�
             }
         }
         labels_in_status[i]->setText(base_outer[i].first);
-        thr->start();
+        //thr->start();
     }
 }
 
 void PingWindow::on_actionBild_triggered() //Нажатие на Сабменю Bild
 {
+    color_str color;
     for(int i = 0; i < base_outer.size(); ++i){
         QLabel *lab_show_result_ping = new QLabel;
-        lab_show_result_ping->setStyleSheet("font-size:18pt; color: rgb(127, 127, 0)");
+        lab_show_result_ping->setStyleSheet(color.grey);
         lab_show_result_ping->setText(base_outer[i].first);
         ui->status_layout->addWidget(lab_show_result_ping);
         labels_in_status.push_back(lab_show_result_ping);
