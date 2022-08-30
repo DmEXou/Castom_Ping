@@ -2,6 +2,9 @@
 #include "./ui_pingwindow.h"
 #include "sub_add_ping_object.h"
 
+#include <iostream>
+#include <string>
+
 bool PingWindow::ping_(const QString& ip){
     QStringList parameters;
 
@@ -13,10 +16,10 @@ bool PingWindow::ping_(const QString& ip){
 
     parameters << ip;
     QProcess proc;
-    auto code_det = proc.startDetached("ping", parameters); //Попробовать без Thread
-    qDebug() << code_det << ip << proc.exitStatus() << "---" << proc.exitCode();
-    int code = proc.execute("ping", parameters);
-    if (code == 0) {
+    proc.start("ping", parameters);
+    proc.waitForFinished();
+    auto data_byte = proc.readAllStandardOutput();
+    if (data_byte.size() > 250) {
         return true;
     } else {
         return false;
@@ -94,7 +97,7 @@ void PingWindow::worck_to_log(const QString& str, bool del_status = false){
 
 void PingWindow::reading_update(){ // SLOT для проверки доступности хоста
     for(int i = 0; i < base_outer.size(); ++i){
-        //QThread *thr = new QThread();
+        QThread *thr = new QThread();
         QString str = answer_color(base_outer[i].second);
         color_str color;
         if(str == color.red){ //Задержка в 3 цикла для смены цвета на красный
@@ -116,7 +119,7 @@ void PingWindow::reading_update(){ // SLOT для проверки доступ�
             }
         }
         labels_in_status[i]->setText(base_outer[i].first);
-        //thr->start();
+        thr->start();
     }
 }
 
